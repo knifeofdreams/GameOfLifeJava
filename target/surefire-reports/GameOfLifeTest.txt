@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: GameOfLifeTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.024 s <<< FAILURE! - in GameOfLifeTest
+life_the_universe_and_everything  Time elapsed: 0.02 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <42> but was: <54>
+	at GameOfLifeTest.life_the_universe_and_everything(GameOfLifeTest.java:11)
+
