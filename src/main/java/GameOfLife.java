@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 
 public class GameOfLife {
 
-  public static int answer() {
-    return 6 * 7;
+  public static ArrayList<Integer> stepGeneration(ArrayList<Integer> population) {
+    return new ArrayList<Integer>();
   }
 }
