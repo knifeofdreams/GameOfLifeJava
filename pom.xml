@@ -4,14 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>gameoflife</groupId>
-  <artifactId>root</artifactId>
+  <groupId>io.github.knifeofdreams</groupId>
+  <artifactId>game-of-life</artifactId>
   <version>1.0</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+    <maven.compiler.release>11</maven.compiler.release>
     <junit.jupiter.version>5.5.2</junit.jupiter.version>
   </properties>
 
@@ -36,6 +35,5 @@
       </plugin>
     </plugins>
   </build>
-
 
 </project>
