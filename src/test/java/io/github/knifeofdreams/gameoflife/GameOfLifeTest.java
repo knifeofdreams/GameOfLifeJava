@@ -21,11 +21,25 @@ public class GameOfLifeTest {
 
   @Test
   public void cellsWithLessThanTwoNeighboursDie() {
-    final List<Integer> initialPopulation = List.of(2, 3, 1);
-
-    final List<Integer> expectedPopulation = List.of(2, 3);
+    final List<Integer> initialPopulation = List.of(2, 0, 0, 2, 1);
+    final List<Integer> expectedPopulation = List.of(2, 2);
 
     assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
   }
 
+  @Test
+  public void cellsWith2r3NeighboursLiveToNextGeneration() {
+    final List<Integer> initialPopulation = List.of(2, 0, 3, 2, 1);
+    final List<Integer> expectedPopulation = List.of(2, 3, 2);
+
+    assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
+  }
+
+  @Test
+  public void cellsWithMoreThan3NeighboursDie() {
+    final List<Integer> initialPopulation = List.of(2, 4, 3, 2, 5, 8);
+    final List<Integer> expectedPopulation = List.of(2, 3, 2);
+
+    assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
+  }
 }

@@ -14,7 +14,7 @@ public class GameOfLife {
   public static List<Integer> stepGeneration(List<Integer> population) {
     return population
         .stream()
-        .filter(neighbours -> neighbours >= 2)
+        .filter(neighbours -> neighbours == 2 || neighbours == 3)
         .collect(Collectors.toList());
   }
 }
