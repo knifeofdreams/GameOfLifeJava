@@ -17,15 +17,15 @@ public class Histogram {
                 positions.push(i);
                 heights.push(histogram.get(i));
             } else {
-                maxSize = max(heights.pop() * (i - positions.peek()), maxSize);
-
-                if (!heights.empty() && histogram.get(i) <= heights.peek()) {
-                    positions.pop();
-                } else {
-                    heights.push(histogram.get(i));
+                int lastPosition = i;
+                while (!heights.empty() && histogram.get(i) <= heights.peek()) {
+                    lastPosition = positions.pop();
+                    maxSize = max(heights.pop() * (i - lastPosition), maxSize);
                 }
+
+                heights.push(histogram.get(i));
+                positions.push(lastPosition);
             }
-            System.out.println("lofasz");
         }
 
         while (!heights.empty()) {
