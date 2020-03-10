@@ -105,4 +105,34 @@ public class GameOfLifeTest {
         assertEquals(expectedPopulation, game.stepGeneration());
     }
 
+    @Test
+    public void testGlider() {
+        final Cell cell1 = new Cell(0, 0, true);
+        final Cell cell2 = new Cell(1, 0, true);
+        final Cell cell3 = new Cell(1, 2, true);
+        final Cell cell4 = new Cell(2, 0, true);
+        final Cell cell5 = new Cell(2, 1, true);
+
+        final List<Cell> initialPopulation = List.of(
+                cell1,
+                cell2,
+                cell3,
+                cell4,
+                cell5
+        );
+
+        final List<Cell> expectedPopulation = List.of(
+                cell2,
+                cell4,
+                cell5,
+                new Cell(1, -1, true),
+            new Cell(0, 1, true)
+        );
+
+        final GameOfLife game = new GameOfLife(initialPopulation);
+
+        assertEquals(expectedPopulation, game.stepGeneration());
+
+    }
+
 }
