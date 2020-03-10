@@ -14,48 +14,28 @@ import static java.lang.Math.abs;
 
 public class GameOfLife {
 
-    private final List<Cell> initialPopulation;
+    private final List<Cell> initialAlivePopulation;
 
     public GameOfLife(List<Cell> initialPopulation) {
-        this.initialPopulation = initialPopulation;
+        this.initialAlivePopulation = initialPopulation;
     }
 
     public List<Cell> stepGeneration() {
-        Stream<Cell> population = Stream.concat(initialPopulation.stream(), getDeadNeighbours().stream());
-        return population
-                .filter(cell -> cell.isAlive() && liveNeighbourCount(cell) == 2
-                        || cell.isAlive() && liveNeighbourCount(cell) == 3
-                        || !cell.isAlive() && liveNeighbourCount(cell) == 3)
+        return nextGenerationCandidates()
+                .filter(cell -> isAliveWithTwoNeighbours(cell) || liveNeighbourCount(cell) == 3)
                 .collect(Collectors.toList());
     }
 
-    private long liveNeighbourCount(Cell assessedCell) {
-        return getLiveNeighbours(assessedCell)
-                .stream()
-                .count();
+    private Stream<Cell> nextGenerationCandidates() {
+        return Stream.concat(initialAlivePopulation.stream(), getDeadCandidates());
     }
 
-    private List<Cell> getLiveNeighbours(Cell cell) {
-        return initialPopulation
-                .stream()
-                .filter(populationCell -> areLiveNeighbours(cell, populationCell))
-                .collect(Collectors.toList());
-    }
-
-    private boolean areLiveNeighbours(Cell comparedCell, Cell cellToCompareTo) {
-        return comparedCell != cellToCompareTo
-                && cellToCompareTo.isAlive()
-                && abs(comparedCell.getX() - cellToCompareTo.getX()) <= 1
-                && abs(comparedCell.getY() - cellToCompareTo.getY()) <= 1;
-    }
-
-    private List<Cell> getDeadNeighbours() {
-        return initialPopulation
+    private Stream<Cell> getDeadCandidates() {
+        return initialAlivePopulation
                 .stream()
                 .flatMap(cell -> getDeadNeighbours(cell))
-                .filter(cell -> !initialPopulation.contains(cell))
-                .distinct()
-                .collect(Collectors.toList());
+                .filter(cell -> !initialAlivePopulation.contains(cell))
+                .distinct();
     }
 
     private Stream<Cell> getDeadNeighbours(Cell cell) {
@@ -70,4 +50,28 @@ public class GameOfLife {
                 new Cell(cell.getX() + 1, cell.getY() + 1, false));
     }
 
+    private boolean isAliveWithTwoNeighbours(Cell cell) {
+        return cell.isAlive() && liveNeighbourCount(cell) == 2;
+    }
+
+    private long liveNeighbourCount(Cell cell) {
+        return getLiveNeighbours(cell).count();
+    }
+
+    private Stream<Cell> getLiveNeighbours(Cell cell) {
+        return initialAlivePopulation
+                .stream()
+                .filter(cellInAlivePopulation -> areLiveNeighbours(cell, cellInAlivePopulation));
+    }
+
+    private boolean areLiveNeighbours(Cell comparedCell, Cell cellToCompareTo) {
+        return cellToCompareTo.isAlive()
+                && areNeighbours(comparedCell, cellToCompareTo);
+    }
+
+    private boolean areNeighbours(Cell comparedCell, Cell cellToCompareTo) {
+        return comparedCell != cellToCompareTo
+                && abs(comparedCell.getX() - cellToCompareTo.getX()) <= 1
+                && abs(comparedCell.getY() - cellToCompareTo.getY()) <= 1;
+    }
 }

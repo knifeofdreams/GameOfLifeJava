@@ -6,11 +6,11 @@
  */
 package io.github.knifeofdreams.gameoflife;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameOfLifeTest {
 
