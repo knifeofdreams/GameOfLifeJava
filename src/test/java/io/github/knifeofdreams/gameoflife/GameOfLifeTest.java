@@ -71,7 +71,9 @@ public class GameOfLifeTest {
         final List<Cell> expectedPopulation = List.of(
                 cell1,
                 cell4,
-                cell5
+                cell5,
+                new Cell(1, -1, true),
+                new Cell(0, 1, true)
         );
 
         final GameOfLife game = new GameOfLife(initialPopulation);

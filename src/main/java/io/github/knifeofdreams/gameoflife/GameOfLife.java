@@ -8,6 +8,7 @@ package io.github.knifeofdreams.gameoflife;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 
@@ -20,29 +21,53 @@ public class GameOfLife {
     }
 
     public List<Cell> stepGeneration() {
-        return initialPopulation
-                .stream()
-                .filter(cell -> neighbourCount(cell) == 2 || neighbourCount(cell) == 3)
+        Stream<Cell> population = Stream.concat(initialPopulation.stream(), getDeadNeighbours().stream());
+        return population
+                .filter(cell -> cell.isAlive() && liveNeighbourCount(cell) == 2
+                        || cell.isAlive() && liveNeighbourCount(cell) == 3
+                        || !cell.isAlive() && liveNeighbourCount(cell) == 3)
                 .collect(Collectors.toList());
     }
 
-    private long neighbourCount(Cell assessedCell) {
-        return getNeighbours(assessedCell)
+    private long liveNeighbourCount(Cell assessedCell) {
+        return getLiveNeighbours(assessedCell)
                 .stream()
                 .count();
     }
 
-    private List<Cell> getNeighbours(Cell cell) {
+    private List<Cell> getLiveNeighbours(Cell cell) {
         return initialPopulation
                 .stream()
-                .filter(populationCell -> areNeighbours(populationCell, cell))
+                .filter(populationCell -> areLiveNeighbours(cell, populationCell))
                 .collect(Collectors.toList());
     }
 
-    private boolean areNeighbours(Cell cell1, Cell cell2) {
-        return cell1 != cell2
-                && abs(cell1.getX() - cell2.getX()) <= 1
-                && abs(cell1.getY() - cell2.getY()) <= 1;
+    private boolean areLiveNeighbours(Cell comparedCell, Cell cellToCompareTo) {
+        return comparedCell != cellToCompareTo
+                && cellToCompareTo.isAlive()
+                && abs(comparedCell.getX() - cellToCompareTo.getX()) <= 1
+                && abs(comparedCell.getY() - cellToCompareTo.getY()) <= 1;
+    }
+
+    private List<Cell> getDeadNeighbours() {
+        return initialPopulation
+                .stream()
+                .flatMap(cell -> getDeadNeighbours(cell))
+                .filter(cell -> !initialPopulation.contains(cell))
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    private Stream<Cell> getDeadNeighbours(Cell cell) {
+        return Stream.of(
+                new Cell(cell.getX() - 1, cell.getY() - 1, false),
+                new Cell(cell.getX(), cell.getY() - 1, false),
+                new Cell(cell.getX() + 1, cell.getY() - 1, false),
+                new Cell(cell.getX() - 1, cell.getY(), false),
+                new Cell(cell.getX() + 1, cell.getY(), false),
+                new Cell(cell.getX() - 1, cell.getY() + 1, false),
+                new Cell(cell.getX(), cell.getY() + 1, false),
+                new Cell(cell.getX() + 1, cell.getY() + 1, false));
     }
 
 }
