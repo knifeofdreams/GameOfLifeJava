@@ -9,37 +9,73 @@ package io.github.knifeofdreams.gameoflife;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class GameOfLifeTest {
 
-  @Test
-  void emptyPopulationStepsToEmptyPopulation() {
-    final List<Integer> emptyPopulation = List.of();
-    assertEquals(emptyPopulation, GameOfLife.stepGeneration(emptyPopulation));
-  }
+    @Test
+    void emptyPopulationStepsToEmptyPopulation() {
+        final List<Cell> emptyPopulation = List.of();
+        final GameOfLife game = new GameOfLife(emptyPopulation);
+        assertEquals(emptyPopulation, game.stepGeneration());
+    }
 
-  @Test
-  public void cellsWithLessThanTwoNeighboursDie() {
-    final List<Integer> initialPopulation = List.of(2, 0, 0, 2, 1);
-    final List<Integer> expectedPopulation = List.of(2, 2);
+    @Test
+    public void cellsWithLessThanTwoNeighboursDie() {
+        final GameOfLife game = new GameOfLife(List.of(new Cell(0, 0)));
+        assertEquals(List.of(), game.stepGeneration());
+    }
 
-    assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
-  }
+    @Test
+    public void cellsWith2r3NeighboursLiveToNextGeneration() {
+        final Cell cellWithOneNeighbour = new Cell(0, 0);
+        final Cell cellWithTwoNeighbours1 = new Cell(2, 1);
+        final Cell cellWithTwoNeighbours2 = new Cell(2, 0);
+        final Cell cellWithThreeNeighbours = new Cell(1, 1);
 
-  @Test
-  public void cellsWith2r3NeighboursLiveToNextGeneration() {
-    final List<Integer> initialPopulation = List.of(2, 0, 3, 2, 1);
-    final List<Integer> expectedPopulation = List.of(2, 3, 2);
+        final List<Cell> initialPopulation = List.of(
+                cellWithOneNeighbour,
+                cellWithTwoNeighbours1,
+                cellWithTwoNeighbours2,
+                cellWithThreeNeighbours
+        );
 
-    assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
-  }
+        final List<Cell> expectedPopulation = List.of(
+                cellWithTwoNeighbours1,
+                cellWithTwoNeighbours2,
+                cellWithThreeNeighbours
+        );
 
-  @Test
-  public void cellsWithMoreThan3NeighboursDie() {
-    final List<Integer> initialPopulation = List.of(2, 4, 3, 2, 5, 8);
-    final List<Integer> expectedPopulation = List.of(2, 3, 2);
+        final GameOfLife game = new GameOfLife(initialPopulation);
 
-    assertEquals(expectedPopulation, GameOfLife.stepGeneration(initialPopulation));
-  }
+        assertEquals(expectedPopulation, game.stepGeneration());
+    }
+
+    @Test
+    public void cellsWithMoreThan3NeighboursDie() {
+        final Cell cell1 = new Cell(0, 0);
+        final Cell cell2 = new Cell(1, 1);
+        final Cell cell3 = new Cell(1, 0);
+        final Cell cell4 = new Cell(2, 0);
+        final Cell cell5 = new Cell(2, 1);
+
+        final List<Cell> initialPopulation = List.of(
+                cell1,
+                cell2,
+                cell3,
+                cell4,
+                cell5
+        );
+
+        final List<Cell> expectedPopulation = List.of(
+                cell1,
+                cell4,
+                cell5
+        );
+
+        final GameOfLife game = new GameOfLife(initialPopulation);
+
+        assertEquals(expectedPopulation, game.stepGeneration());
+    }
 }
