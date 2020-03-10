@@ -126,7 +126,7 @@ public class GameOfLifeTest {
                 cell4,
                 cell5,
                 new Cell(1, -1, true),
-            new Cell(0, 1, true)
+                new Cell(0, 1, true)
         );
 
         final GameOfLife game = new GameOfLife(initialPopulation);

@@ -23,6 +23,8 @@ public class GameOfLife {
     public List<Cell> stepGeneration() {
         return nextGenerationCandidates()
                 .filter(cell -> isAliveWithTwoNeighbours(cell) || liveNeighbourCount(cell) == 3)
+                .map(cell -> cell.setAlive(true))
+                .distinct()
                 .collect(Collectors.toList());
     }
 

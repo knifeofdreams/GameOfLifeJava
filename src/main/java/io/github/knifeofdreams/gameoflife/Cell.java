@@ -3,9 +3,9 @@ package io.github.knifeofdreams.gameoflife;
 import java.util.Objects;
 
 public class Cell {
-    private final int x;
-    private final int y;
-    private final boolean isAlive;
+    private int x;
+    private int y;
+    private boolean isAlive;
 
     public Cell(int x, int y, boolean isAlive) {
         this.x = x;
@@ -25,13 +25,27 @@ public class Cell {
         return isAlive;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Cell setAlive(boolean alive) {
+        isAlive = alive;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cell cell = (Cell) o;
         return x == cell.x &&
-                y == cell.y;
+                y == cell.y &&
+                isAlive == cell.isAlive;
     }
 
     @Override
