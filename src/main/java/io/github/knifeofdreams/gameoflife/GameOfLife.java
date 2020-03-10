@@ -8,7 +8,6 @@ package io.github.knifeofdreams.gameoflife;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.lang.Math.abs;
 
@@ -21,16 +20,14 @@ public class GameOfLife {
     }
 
     public List<Cell> stepGeneration() {
-        final Stream<Cell> cellStream = initialPopulation
+        return initialPopulation
                 .stream()
-                .filter(cell -> neighbourCount(cell) == 2 || neighbourCount(cell) == 3);
-        return cellStream
+                .filter(cell -> neighbourCount(cell) == 2 || neighbourCount(cell) == 3)
                 .collect(Collectors.toList());
     }
 
     private long neighbourCount(Cell assessedCell) {
-        final List<Cell> neighbours = getNeighbours(assessedCell);
-        return neighbours
+        return getNeighbours(assessedCell)
                 .stream()
                 .count();
     }
