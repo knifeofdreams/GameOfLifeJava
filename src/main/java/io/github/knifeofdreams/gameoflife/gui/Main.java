@@ -19,7 +19,7 @@ public class Main implements Runnable {
   public void run() {
 
     GameOfLifeGrid gameOfLifeGrid = new GameOfLifeGrid();
-    new Life(gameOfLifeGrid, createGlider()).start();
+    new Life(gameOfLifeGrid, createGliderGun()).start();
 
     JFrame frame = new JFrame("Game Of Life");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

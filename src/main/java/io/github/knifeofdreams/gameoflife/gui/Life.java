@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Life {
 
-  private static final int GENERATION_LENGTH = 1000;
+  private static final int GENERATION_LENGTH = 100;
 
   private final GameOfLifeGrid grid;
   private List<Cell> generation;
