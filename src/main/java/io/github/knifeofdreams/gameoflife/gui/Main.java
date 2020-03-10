@@ -18,21 +18,20 @@ public class Main implements Runnable {
   @Override
   public void run() {
 
-    GameOfLifeGrid gameOfLifeGrid = new GameOfLifeGrid(createInitialGeneration());
+    GameOfLifeGrid gameOfLifeGrid = new GameOfLifeGrid();
+    new Life(gameOfLifeGrid, createGlider()).start();
 
     JFrame frame = new JFrame("Game Of Life");
-    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     frame.setContentPane(createContentPane(gameOfLifeGrid));
 
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
-
-    EventQueue.invokeLater(gameOfLifeGrid::startTimer);
   }
 
-  private List<Cell> createInitialGeneration() {
+  private List<Cell> createGliderGun() {
     return List.of(
         new Cell(1, 5, true),
         new Cell(1, 6, true),
@@ -71,6 +70,15 @@ public class Main implements Runnable {
         new Cell(36, 3, true),
         new Cell(36, 4, true)
     );
+  }
+
+  private List<Cell> createGlider() {
+    return List.of(
+        new Cell(10, 12, true),
+        new Cell(11, 10, true),
+        new Cell(11, 12, true),
+        new Cell(12, 11, true),
+        new Cell(12, 12, true));
   }
 
   private JPanel createContentPane(GameOfLifeGrid gameOfLifeGrid) {
