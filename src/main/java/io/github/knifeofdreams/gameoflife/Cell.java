@@ -5,10 +5,12 @@ import java.util.Objects;
 public class Cell {
     private final int x;
     private final int y;
+    private final boolean isAlive;
 
-    public Cell(int x, int y) {
+    public Cell(int x, int y, boolean isAlive) {
         this.x = x;
         this.y = y;
+        this.isAlive = isAlive;
     }
 
     public int getX() {
@@ -17,6 +19,10 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 
     @Override

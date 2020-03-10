@@ -23,16 +23,16 @@ public class GameOfLifeTest {
 
     @Test
     public void cellsWithLessThanTwoNeighboursDie() {
-        final GameOfLife game = new GameOfLife(List.of(new Cell(0, 0)));
+        final GameOfLife game = new GameOfLife(List.of(new Cell(0, 0, true)));
         assertEquals(List.of(), game.stepGeneration());
     }
 
     @Test
     public void cellsWith2r3NeighboursLiveToNextGeneration() {
-        final Cell cellWithOneNeighbour = new Cell(0, 0);
-        final Cell cellWithTwoNeighbours1 = new Cell(2, 1);
-        final Cell cellWithTwoNeighbours2 = new Cell(2, 0);
-        final Cell cellWithThreeNeighbours = new Cell(1, 1);
+        final Cell cellWithOneNeighbour = new Cell(0, 0, true);
+        final Cell cellWithTwoNeighbours1 = new Cell(2, 1, true);
+        final Cell cellWithTwoNeighbours2 = new Cell(2, 0, true);
+        final Cell cellWithThreeNeighbours = new Cell(1, 1, true);
 
         final List<Cell> initialPopulation = List.of(
                 cellWithOneNeighbour,
@@ -54,11 +54,11 @@ public class GameOfLifeTest {
 
     @Test
     public void cellsWithMoreThan3NeighboursDie() {
-        final Cell cell1 = new Cell(0, 0);
-        final Cell cell2 = new Cell(1, 1);
-        final Cell cell3 = new Cell(1, 0);
-        final Cell cell4 = new Cell(2, 0);
-        final Cell cell5 = new Cell(2, 1);
+        final Cell cell1 = new Cell(0, 0, true);
+        final Cell cell2 = new Cell(1, 1, true);
+        final Cell cell3 = new Cell(1, 0, true);
+        final Cell cell4 = new Cell(2, 0, true);
+        final Cell cell5 = new Cell(2, 1, true);
 
         final List<Cell> initialPopulation = List.of(
                 cell1,
@@ -78,4 +78,29 @@ public class GameOfLifeTest {
 
         assertEquals(expectedPopulation, game.stepGeneration());
     }
+
+    @Test
+    public void testDeadCellWithExactlyThreeLiveNeighboursComesAlive() {
+        final Cell cell1 = new Cell(0, 0, true);
+        final Cell cell2 = new Cell(1, 1, true);
+        final Cell cell3 = new Cell(1, 0, true);
+
+        final List<Cell> initialPopulation = List.of(
+                cell1,
+                cell2,
+                cell3
+        );
+
+        final List<Cell> expectedPopulation = List.of(
+                cell1,
+                cell2,
+                cell3,
+                new Cell(0, 1, true)
+        );
+
+        final GameOfLife game = new GameOfLife(initialPopulation);
+
+        assertEquals(expectedPopulation, game.stepGeneration());
+    }
+
 }

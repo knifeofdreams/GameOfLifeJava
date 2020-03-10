@@ -8,20 +8,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class CellTest {
 
     @Test
-    void canBeCreatedWithCoordinates() {
-        Cell cell = new Cell(0, 1);
+    void canBeCreated() {
+        Cell cell = new Cell(0, 1, true);
     }
 
     @Test
     void canGetXCoordinate() {
-        Cell cell = new Cell(0, 1);
+        Cell cell = new Cell(0, 1, true);
         assertEquals(0, cell.getX());
     }
 
     @Test
     void canGetYCoordinate() {
-        Cell cell = new Cell(0, 1);
+        Cell cell = new Cell(0, 1, true);
         assertEquals(1, cell.getY());
+    }
+
+    @Test
+    void canGetIsAlive() {
+        Cell cell = new Cell(0, 1, true);
+        assertTrue(cell.isAlive());
     }
 
 
